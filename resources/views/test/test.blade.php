@@ -21,17 +21,24 @@
         .dragging {
             opacity: 0.5;
         }
+
+        #loading, #content {
+            transition: opacity 0.5s ease;
+        }
     </style>
 </head>
 <body>
 <div class="px-4 md:px-8 lg:px-10 py-4 min-h-screen">
-    <a href="{{ url('/') }}" class="flex flex-col gap-2 items-center justify-center mb-4">
-        <img src="{{ asset('logo/logo.png') }}" class="h-8" alt="Logo"/>
-        <span class="text-lg md:text-xl lg:text-2xl text-center font-bold">
+    <div id="loading" class="flex flex-col gap-4 mt-20 items-center justify-center max-w-6xl mx-auto text-[#4C4528FF]">
+        <a href="#" class="flex flex-col gap-2 items-center justify-center mb-4">
+            <img src="{{ asset('logo/logo.png') }}" class="h-8" alt="Logo"/>
+            <span class="text-lg md:text-xl lg:text-2xl text-center font-bold">
             Integrated Links
         </span>
-    </a>
-    <div class="max-w-6xl mx-auto text-[#4C4528FF]">
+        </a>
+        <progress class="progress w-56"></progress>
+    </div>
+    <div id="content" class="max-w-6xl mx-auto text-[#4C4528FF]" style="display: none;">
         <div class="mb-4">
             <label class="input input-bordered flex items-center gap-2">
                 <img class="h-4 w-4 opacity-70" src="{{ asset('logo/search.svg') }}" alt="search"/>
@@ -89,10 +96,34 @@
             </dialog>
         </div>
         <div id="linksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto">
+            <a href="#" class="card h-20 w-20 cursor-pointer md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card">
+                <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                    <img src="{{ asset('logo/logo.png') }}" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+                </figure>
+                <div class="card-body text-center">
+                    <span
+                        class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                        Static 1
+                    </span>
+                </div>
+            </a>
+            <a href="#" class="card h-20 w-20 cursor-pointer md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card">
+                <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                    <img src="{{ asset('logo/logo.png') }}" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+                </figure>
+                <div class="card-body text-center">
+                    <span
+                        class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                        Static 2
+                    </span>
+                </div>
+            </a>
             <!-- Link cards -->
         </div>
     </div>
 </div>
+<script src="{{ asset('js/load.js') }}"></script>
 <script src="{{ asset('js/filter.js') }}"></script>
+<script src="{{ asset('js/link.js') }}"></script>
 </body>
 </html>
