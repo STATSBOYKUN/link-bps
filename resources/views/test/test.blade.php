@@ -61,18 +61,18 @@
         <button id="toggleSearchButton" class="fixed bottom-4 right-4 btn btn-accent z-[1]" onclick="toggleSearchBar()">
             <img class="h-5 w-5 opacity-70" src="{{ asset('logo/search.svg') }}" alt="search"/>
         </button>
-        <div class="grid grid-cols-2 gap-2">
-            <div class="indicator">
+        <div class="flex flex-row justify-between">
+            <div id="admIndicator" class="indicator">
                 <span class="indicator-item indicator-center badge badge-accent">Administrasi</span>
                 <div id="admLinksContainer"
-                     class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 mx-auto mb-4 border-t-2 border-secondary rounded-box p-1 pt-3">
+                     class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 mx-auto mb-4 border-t-2 border-secondary rounded-box p-1 pt-3 h-fit">
                     <!-- Link cards -->
                 </div>
             </div>
-            <div class="indicator">
+            <div id="teknisIndicator" class="indicator">
                 <span class="indicator-item indicator-center badge badge-secondary">Teknis</span>
                 <div id="teknisLinksContainer"
-                     class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 mx-auto mb-4 border-t-2 border-secondary-content rounded-box p-1 pt-3">
+                     class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 mx-auto mb-4 border-t-2 border-secondary-content rounded-box p-1 pt-3 h-fit">
                     <!-- Link cards -->
                 </div>
             </div>

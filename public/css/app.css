@@ -2270,8 +2270,15 @@ details.collapse summary::-webkit-details-marker{
 .h-auto{
   height: auto;
 }
+.h-fit{
+  height: -moz-fit-content;
+  height: fit-content;
+}
 .min-h-screen{
   min-height: 100vh;
+}
+.min-h-\[300px\]{
+  min-height: 300px;
 }
 .w-4{
   width: 1rem;
@@ -2303,11 +2310,20 @@ details.collapse summary::-webkit-details-marker{
 .max-w-\[50px\]{
   max-width: 50px;
 }
+.flex-1{
+  flex: 1 1 0%;
+}
 .grow{
   flex-grow: 1;
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.grid-flow-row-dense{
+  grid-auto-flow: row dense;
+}
+.grid-flow-col-dense{
+  grid-auto-flow: column dense;
 }
 .grid-cols-2{
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2329,6 +2345,9 @@ details.collapse summary::-webkit-details-marker{
 }
 .justify-center{
   justify-content: center;
+}
+.justify-between{
+  justify-content: space-between;
 }
 .gap-1{
   gap: 0.25rem;
