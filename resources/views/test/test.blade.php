@@ -6,11 +6,11 @@
     <meta name="author" content="">
     <meta name="description" content="">
 
-    {{-- Title --}}
+    <!-- Title -->
     <title>Integrated Links - BPS Karanganyar</title>
     <link rel="icon" href="{{ asset('logo/logo.ico') }}" type="image/x-icon">
 
-    {{--  CSS  --}}
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <style>
@@ -55,12 +55,11 @@
         <div class="flex flex-row items-center gap-4 mb-5">
             <div class="flex flex-row gap-1 items-center">
                 <img class="w-auto h-6" src="{{ asset('logo/link.svg') }}" alt="link"/>
-                <div class="text-lg md:text-xl lg:text-2xl text-[#499380] font-bold">
+                <div class="text-lg md:text-xl lg:text-2xl text-primary font-bold">
                     Links
                 </div>
             </div>
-            <button class="btn btn-xs btn-accent" onclick="document.getElementById('add_link').showModal()">Tambah +
-            </button>
+            <button class="btn btn-xs btn-accent" onclick="document.getElementById('add_link').showModal()">Tambah +</button>
             <dialog id="add_link" class="modal">
                 <form id="addLinkForm" class="modal-box">
                     <div class="flex flex-row gap-1 items-center">
@@ -75,55 +74,63 @@
                         <label for="name" class="cursor-pointer text-xs font-bold">
                             Alias Link
                         </label>
-                        <input id="linkAlias" type="text" name="name" placeholder="Masukkan alias link..."
-                               class="input input-bordered w-full max-w-xs" required/>
+                        <input id="linkAlias" type="text" name="name" placeholder="Masukkan alias link..." class="input input-bordered w-full max-w-xs" required />
                     </div>
 
                     <div class="link-input-container flex flex-col gap-2 mb-4">
                         <label for="link" class="cursor-pointer text-xs font-bold">
                             Link
                         </label>
-                        <input id="linkUrl" type="text" name="link" placeholder="Masukkan alamat link..."
-                               class="input input-bordered w-full max-w-xs" required/>
+                        <input id="linkUrl" type="text" name="link" placeholder="Masukkan alamat link..." class="input input-bordered w-full max-w-xs" required />
                     </div>
 
                     <div class="modal-action">
-                        <button type="button" class="btn" onclick="document.getElementById('add_link').close()">Close
-                        </button>
+                        <button type="button" class="btn" onclick="document.getElementById('add_link').close()">Close</button>
+                        <button type="submit" class="btn btn-accent">Save</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <dialog id="edit_link" class="modal">
+                <form id="editLinkForm" class="modal-box">
+                    <div class="flex flex-row gap-1 items-center">
+                        <img class="w-auto h-6" src="{{ asset('logo/link.svg') }}" alt="link"/>
+                        <h3 class="text-lg font-bold">
+                            Edit Link
+                        </h3>
+                    </div>
+
+                    <div class="divider my-1 mb-2 w-full"></div>
+                    <div class="name-input-container flex flex-col gap-2 mb-4">
+                        <label for="editAlias" class="cursor-pointer text-xs font-bold">
+                            Alias Link
+                        </label>
+                        <input id="editAlias" type="text" name="name" placeholder="Masukkan alias link..." class="input input-bordered w-full max-w-xs" required />
+                    </div>
+
+                    <div class="link-input-container flex flex-col gap-2 mb-4">
+                        <label for="editUrl" class="cursor-pointer text-xs font-bold">
+                            Link
+                        </label>
+                        <input id="editUrl" type="text" name="link" placeholder="Masukkan alamat link..." class="input input-bordered w-full max-w-xs" required />
+                    </div>
+
+                    <div class="modal-action">
+                        <button type="button" class="btn" onclick="document.getElementById('edit_link').close()">Close</button>
                         <button type="submit" class="btn btn-accent">Save</button>
                     </div>
                 </form>
             </dialog>
         </div>
         <div id="linksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto">
-            <a href="#" class="card h-20 w-20 cursor-pointer md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card">
-                <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                    <img src="{{ asset('logo/logo.png') }}" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-                </figure>
-                <div class="card-body text-center">
-                    <span
-                        class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                        Static 1
-                    </span>
-                </div>
-            </a>
-            <a href="#" class="card h-20 w-20 cursor-pointer md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card">
-                <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                    <img src="{{ asset('logo/logo.png') }}" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-                </figure>
-                <div class="card-body text-center">
-                    <span
-                        class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                        Static 2
-                    </span>
-                </div>
-            </a>
             <!-- Link cards -->
         </div>
     </div>
 </div>
+
 <script src="{{ asset('js/load.js') }}"></script>
 <script src="{{ asset('js/filter.js') }}"></script>
 <script src="{{ asset('js/link.js') }}"></script>
+
 </body>
 </html>

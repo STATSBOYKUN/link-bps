@@ -6,5 +6,5 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('content').style.display = 'block';
             document.getElementById('content').style.opacity = '1';
         }, 500);
-    }, 750);
+    }, 650);
 });
