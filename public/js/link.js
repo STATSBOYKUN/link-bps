@@ -148,7 +148,9 @@ function appendLinkToContainer(link, containerId, category) {
             </ul>
         </div>
         <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-            <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='logo/logo.png'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            <img src="${link.alias === 'Kipapp' ? 'logo/kipapp.png' : `https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}&sz=128`}"
+             onerror="this.src='https://icons.duckduckgo.com/ip3/${new URL(link.url).hostname}.ico'; this.onerror=null; this.src='logo/logo.png';"
+             class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
         </figure>
         <div class="card-body text-center">
             <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
