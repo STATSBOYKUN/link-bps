@@ -54,19 +54,27 @@ function initializeDraggable() {
 function appendLinkToContainer(link, containerId, category) {
     let linksContainer = document.getElementById(containerId);
     let linkCard = document.createElement('a');
-    linkCard.href = link.url;
-    linkCard.className = 'card bg-base-100 h-[72px] w-[72px] md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
+
+    try {
+        new URL(link.url); // Check if the URL is valid
+        linkCard.href = link.url;
+    } catch (e) {
+        console.error(`Invalid URL: ${link.url}`);
+        return; // Skip adding this link if URL is invalid
+    }
+
+    linkCard.className = 'card bg-base-100 h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
     linkCard.draggable = true;
     linkCard.innerHTML = `
         <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
-            <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
-            <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+            <label tabindex="0" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
+            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
                 <li><a class="text-xs" href="#" onclick="editLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Edit</a></li>
                 <li><a class="text-xs" href="#" onclick="removeLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Remove</a></li>
             </ul>
         </div>
         <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-            <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='logo/logo.png'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
         </figure>
         <div class="card-body text-center">
             <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
@@ -138,30 +146,29 @@ function addLink() {
     updateTopLinks();
 }
 
-// Update Top Links
+// Update Links Within Containers
 function updateTopLinks() {
-    let topLinksContainer = document.getElementById('topLinksContainer');
-    topLinksContainer.innerHTML = '';
+    function sortLinks(containerId, links) {
+        let container = document.getElementById(containerId);
+        let linkCards = Array.from(container.getElementsByClassName('link-card'));
+        linkCards.sort((a, b) => {
+            let urlA = a.href;
+            let urlB = b.href;
+            let clicksA = links.find(link => link.url === urlA)?.clicks || 0;
+            let clicksB = links.find(link => link.url === urlB)?.clicks || 0;
+            return clicksB - clicksA;
+        });
+        container.innerHTML = '';
+        linkCards.forEach(card => container.appendChild(card));
+    }
 
-    let links = JSON.parse(localStorage.getItem('links')) || [];
-    let topLinks = links.sort((a, b) => b.clicks - a.clicks).slice(0, 4);
+    let admLinksData = JSON.parse(localStorage.getItem('admLinks')) || [];
+    let teknisLinksData = JSON.parse(localStorage.getItem('teknisLinks')) || [];
+    let allLinksData = JSON.parse(localStorage.getItem('links')) || [];
 
-    topLinks.forEach(link => {
-        let linkCard = document.createElement('a');
-        linkCard.href = link.url;
-        linkCard.className = 'card bg-base-100 h-[72px] w-[72px] md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card';
-        linkCard.innerHTML = `
-            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-            </figure>
-            <div class="card-body text-center">
-                <span class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                    ${link.alias}
-                </span>
-            </div>
-        `;
-        topLinksContainer.appendChild(linkCard);
-    });
+    sortLinks('admLinksContainer', admLinksData);
+    sortLinks('teknisLinksContainer', teknisLinksData);
+    sortLinks('linksContainer', allLinksData);
 }
 
 // Drag-and-Drop Handlers
