@@ -1,17 +1,4 @@
-document.addEventListener('DOMContentLoaded', loadLinks);
-document.addEventListener('DOMContentLoaded', updateTopLinks);
-
-document.getElementById('addLinkForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    addLink();
-});
-
-document.getElementById('editLinkForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    updateLink();
-});
-
-let admLinks = [
+const admLinks = [
     { alias: 'Simpeg', url: 'https://simpeg.bps.go.id', clicks: 0 },
     { alias: 'Kipapp', url: 'https://webapps.bps.go.id/kipapp/', clicks: 0 },
     { alias: 'Sipecut', url: 'https://sipecut.bps.go.id', clicks: 0 },
@@ -21,7 +8,7 @@ let admLinks = [
     { alias: 'Daftar Hadir BPS', url: 'https://webapps.bps.go.id/daftarhadir/', clicks: 0 },
     { alias: 'SMART', url: 'https://smart.kemenkeu.go.id/', clicks: 0 },
     { alias: 'Manajemen Mitra', url: 'https://manajemen-mitra.bps.go.id/', clicks: 0 }
-]
+];
 
 const teknisLinks = [
     { alias: 'Evita', url: 'https://s.bps.go.id/evitajateng', clicks: 0 },
@@ -40,117 +27,91 @@ const teknisLinks = [
     { alias: 'PemirsaSDGs', url: 'https://pemirsasdgs.jatengprov.go.id/', clicks: 0 }
 ];
 
-function appendLinkToContainer(link) {
+document.addEventListener('DOMContentLoaded', loadLinks);
+document.addEventListener('DOMContentLoaded', updateTopLinks);
+
+document.getElementById('addLinkForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    addLink();
+});
+
+document.getElementById('editLinkForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    updateLink();
+});
+
+function initializeDraggable() {
+    let linkCards = document.querySelectorAll('.link-card');
+    linkCards.forEach(card => {
+        card.addEventListener('dragstart', handleDragStart);
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('drop', handleDrop);
+        card.addEventListener('dragend', handleDragEnd);
+    });
+}
+
+function appendLinkToContainer(link, containerId, category) {
+    let linksContainer = document.getElementById(containerId);
+    let linkCard = document.createElement('a');
+    linkCard.href = link.url;
+    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
+    linkCard.draggable = true;
+    linkCard.innerHTML = `
+        <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
+            <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
+            <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+                <li><a class="text-xs" href="#" onclick="editLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Edit</a></li>
+                <li><a class="text-xs" href="#" onclick="removeLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Remove</a></li>
+            </ul>
+        </div>
+        <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+            <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+        </figure>
+        <div class="card-body text-center">
+            <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                ${link.alias}
+            </span>
+        </div>
+    `;
+
+    linkCard.addEventListener('click', function (e) {
+        e.preventDefault();
+        incrementLinkClick(link.url);
+        window.open(link.url, '_blank');
+    });
+
+    linksContainer.appendChild(linkCard);
+    initializeDraggable();
+}
+
+function loadLinks() {
     let linksContainer = document.getElementById('linksContainer');
-    let linkCard = document.createElement('a');
-    linkCard.href = link.url;
-    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
-    linkCard.draggable = true;
-    linkCard.innerHTML = `
-            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
-                <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
-                <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
-                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}'); event.stopPropagation(); return false;">Edit</a></li>
-                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}'); event.stopPropagation(); return false;">Remove</a></li>
-                </ul>
-            </div>
-            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-            </figure>
-            <div class="card-body text-center">
-                <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                    ${link.alias}
-                </span>
-            </div>
-        `;
+    let topLinksContainer = document.getElementById('topLinksContainer');
+    let admLinksContainer = document.getElementById('admLinksContainer');
+    let teknisLinksContainer = document.getElementById('teknisLinksContainer');
 
-    linkCard.addEventListener('dragstart', handleDragStart);
-    linkCard.addEventListener('dragover', handleDragOver);
-    linkCard.addEventListener('drop', handleDrop);
-    linkCard.addEventListener('dragend', handleDragEnd);
-    linkCard.addEventListener('click', function (e) {
-        e.preventDefault();
-        incrementLinkClick(link.url);
-        window.open(link.url, '_blank');
+    linksContainer.innerHTML = '';
+    topLinksContainer.innerHTML = '';
+    admLinksContainer.innerHTML = '';
+    teknisLinksContainer.innerHTML = '';
+
+    let admLinksData = JSON.parse(localStorage.getItem('admLinks')) || admLinks;
+    let teknisLinksData = JSON.parse(localStorage.getItem('teknisLinks')) || teknisLinks;
+    let links = JSON.parse(localStorage.getItem('links')) || [];
+
+    admLinksData.forEach(link => {
+        appendLinkToContainer(link, 'admLinksContainer', 'admLinks');
     });
 
-    linksContainer.appendChild(linkCard);
-}
-
-
-function appendLinkToTeknisContainer(link) {
-    let linksContainer = document.getElementById('teknisLinksContainer');
-    let linkCard = document.createElement('a');
-    linkCard.href = link.url;
-    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
-    linkCard.draggable = true;
-    linkCard.innerHTML = `
-            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
-                <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
-                <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
-                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}'); event.stopPropagation(); return false;">Edit</a></li>
-                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}'); event.stopPropagation(); return false;">Remove</a></li>
-                </ul>
-            </div>
-            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-            </figure>
-            <div class="card-body text-center">
-                <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                    ${link.alias}
-                </span>
-            </div>
-        `;
-
-    linkCard.addEventListener('dragstart', handleDragStart);
-    linkCard.addEventListener('dragover', handleDragOver);
-    linkCard.addEventListener('drop', handleDrop);
-    linkCard.addEventListener('dragend', handleDragEnd);
-    linkCard.addEventListener('click', function (e) {
-        e.preventDefault();
-        incrementLinkClick(link.url);
-        window.open(link.url, '_blank');
+    teknisLinksData.forEach(link => {
+        appendLinkToContainer(link, 'teknisLinksContainer', 'teknisLinks');
     });
 
-    linksContainer.appendChild(linkCard);
-}
-
-
-function appendLinkToAdmContainer(link) {
-    let linksContainer = document.getElementById('admLinksContainer');
-    let linkCard = document.createElement('a');
-    linkCard.href = link.url;
-    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
-    linkCard.draggable = true;
-    linkCard.innerHTML = `
-            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
-                <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
-                <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
-                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}'); event.stopPropagation(); return false;">Edit</a></li>
-                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}'); event.stopPropagation(); return false;">Remove</a></li>
-                </ul>
-            </div>
-            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-            </figure>
-            <div class="card-body text-center">
-                <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                    ${link.alias}
-                </span>
-            </div>
-        `;
-
-    linkCard.addEventListener('dragstart', handleDragStart);
-    linkCard.addEventListener('dragover', handleDragOver);
-    linkCard.addEventListener('drop', handleDrop);
-    linkCard.addEventListener('dragend', handleDragEnd);
-    linkCard.addEventListener('click', function (e) {
-        e.preventDefault();
-        incrementLinkClick(link.url);
-        window.open(link.url, '_blank');
+    links.forEach(link => {
+        appendLinkToContainer(link, 'linksContainer', 'links');
     });
 
-    linksContainer.appendChild(linkCard);
+    updateTopLinks();
 }
 
 function addLink() {
@@ -173,81 +134,6 @@ function addLink() {
     updateTopLinks();
 }
 
-function incrementLinkClick(url) {
-    let links = JSON.parse(localStorage.getItem('links')) || [];
-    let link = links.find(l => l.url === url);
-    if (link) {
-        link.clicks++;
-        localStorage.setItem('links', JSON.stringify(links));
-        updateTopLinks();
-    }
-}
-
-function editLink(url) {
-    let links = JSON.parse(localStorage.getItem('links')) || [];
-    let link = links.find(l => l.url === url);
-    if (link) {
-        document.getElementById('editAlias').value = link.alias;
-        document.getElementById('editUrl').value = link.url;
-        document.getElementById('editLinkForm').setAttribute('data-url', url);
-        document.getElementById('edit_link').showModal();
-    }
-}
-
-function updateLink() {
-    let oldUrl = document.getElementById('editLinkForm').getAttribute('data-url');
-    let alias = document.getElementById('editAlias').value;
-    let url = document.getElementById('editUrl').value;
-
-    let links = JSON.parse(localStorage.getItem('links')) || [];
-    let linkIndex = links.findIndex(l => l.url === oldUrl);
-    if (linkIndex !== -1) {
-        links[linkIndex].alias = alias;
-        links[linkIndex].url = url;
-        localStorage.setItem('links', JSON.stringify(links));
-    }
-
-    loadLinks();
-    document.getElementById('edit_link').close();
-}
-
-function removeLink(url) {
-    let links = JSON.parse(localStorage.getItem('links')) || [];
-    links = links.filter(link => link.url !== url);
-    localStorage.setItem('links', JSON.stringify(links));
-    loadLinks();
-}
-
-function loadLinks() {
-    let linksContainer = document.getElementById('linksContainer');
-    let topLinksContainer = document.getElementById('topLinksContainer');
-    linksContainer.innerHTML = '';
-    topLinksContainer.innerHTML = '';
-
-    let links = JSON.parse(localStorage.getItem('links')) || [];
-
-    if (links.length === 0) {
-        localStorage.setItem('admLinks', JSON.stringify(admLinks));
-
-        let admLinks = JSON.parse(localStorage.getItem('admLinks')) || [];
-        admLinks.forEach(link => {
-            appendLinkToAdmContainer(link);
-        });
-
-        localStorage.setItem('teknisLinks', JSON.stringify(teknisLinks));
-        let teknisLinks = JSON.parse(localStorage.getItem('teknisLinks')) || [];
-        teknisLinks.forEach(link => {
-            appendLinkToTeknisContainer(link);
-        });
-    } else {
-        links.forEach(link => {
-            appendLinkToContainer(link);
-        });
-    }
-
-    updateTopLinks();
-}
-
 function updateTopLinks() {
     let topLinksContainer = document.getElementById('topLinksContainer');
     topLinksContainer.innerHTML = '';
@@ -260,15 +146,15 @@ function updateTopLinks() {
         linkCard.href = link.url;
         linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card';
         linkCard.innerHTML = `
-                <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                    <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-                </figure>
-                <div class="card-body text-center">
-                    <span class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                        ${link.alias}
-                    </span>
-                </div>
-            `;
+            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            </figure>
+            <div class="card-body text-center">
+                <span class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    ${link.alias}
+                </span>
+            </div>
+        `;
         topLinksContainer.appendChild(linkCard);
     });
 }
@@ -289,18 +175,49 @@ function handleDragOver(event) {
 function handleDrop(event) {
     event.preventDefault();
     if (this !== draggedElement) {
-        let linksContainer = document.getElementById('linksContainer');
-        let linksArray = Array.from(linksContainer.children);
-        let draggedIndex = linksArray.indexOf(draggedElement);
-        let targetIndex = linksArray.indexOf(this);
+        let linksContainer;
+        let draggedContainerId;
+        let targetContainerId;
 
-        if (draggedIndex < targetIndex) {
-            linksContainer.insertBefore(draggedElement, this.nextSibling);
-        } else {
-            linksContainer.insertBefore(draggedElement, this);
+        // Determine the container IDs for dragged and target elements
+        let allContainers = ['linksContainer', 'admLinksContainer', 'teknisLinksContainer'];
+
+        allContainers.forEach(containerId => {
+            let container = document.getElementById(containerId);
+            if (container.contains(draggedElement)) {
+                draggedContainerId = containerId;
+            }
+            if (container.contains(this)) {
+                targetContainerId = containerId;
+            }
+        });
+
+        if (draggedContainerId && targetContainerId) {
+            let draggedContainer = document.getElementById(draggedContainerId);
+            let targetContainer = document.getElementById(targetContainerId);
+
+            let draggedIndex = Array.from(draggedContainer.children).indexOf(draggedElement);
+            let targetIndex = Array.from(targetContainer.children).indexOf(this);
+
+            if (draggedContainerId === targetContainerId) {
+                // If the dragged and target elements are in the same container
+                if (draggedIndex < targetIndex) {
+                    targetContainer.insertBefore(draggedElement, this.nextSibling);
+                } else {
+                    targetContainer.insertBefore(draggedElement, this);
+                }
+            } else {
+                // If the dragged and target elements are in different containers
+                draggedContainer.removeChild(draggedElement);
+                if (targetIndex === -1) {
+                    targetContainer.appendChild(draggedElement);
+                } else {
+                    targetContainer.insertBefore(draggedElement, this);
+                }
+            }
+
+            updateLinksOrder();
         }
-
-        updateLinksOrder();
     }
 }
 
@@ -310,17 +227,80 @@ function handleDragEnd() {
 }
 
 function updateLinksOrder() {
-    let linksContainer = document.getElementById('linksContainer');
-    let linkCards = linksContainer.getElementsByClassName('link-card');
-    let links = [];
+    let linkContainers = ['linksContainer', 'admLinksContainer', 'teknisLinksContainer'];
+    let allLinks = [];
 
-    for (let card of linkCards) {
-        let alias = card.getElementsByClassName('link-text')[0].innerText;
-        let url = card.href;
-        let clicks = JSON.parse(localStorage.getItem('links'))?.find(link => link.url === url)?.clicks || 0;
+    linkContainers.forEach(containerId => {
+        let linksContainer = document.getElementById(containerId);
+        let linkCards = linksContainer.getElementsByClassName('link-card');
 
-        links.push({ alias, url, clicks });
+        for (let card of linkCards) {
+            let alias = card.getElementsByClassName('link-text')[0].innerText;
+            let url = card.href;
+            let clicks = JSON.parse(localStorage.getItem('links'))?.find(link => link.url === url)?.clicks || 0;
+
+            allLinks.push({ alias, url, clicks });
+        }
+    });
+
+    localStorage.setItem('links', JSON.stringify(allLinks));
+}
+
+function incrementLinkClick(url) {
+    let links = JSON.parse(localStorage.getItem('links')) || [];
+    let link = links.find(l => l.url === url);
+    if (link) {
+        link.clicks++;
+        localStorage.setItem('links', JSON.stringify(links));
+        updateTopLinks();
+    }
+}
+
+function editLink(url, category) {
+    let links = JSON.parse(localStorage.getItem(category)) || [];
+    let link = links.find(l => l.url === url);
+    if (link) {
+        document.getElementById('editAlias').value = link.alias;
+        document.getElementById('editUrl').value = link.url;
+        document.getElementById('editLinkForm').setAttribute('data-url', url);
+        document.getElementById('editLinkForm').setAttribute('data-category', category);
+        document.getElementById('edit_link').showModal();
+    }
+}
+
+function updateLink() {
+    let oldUrl = document.getElementById('editLinkForm').getAttribute('data-url');
+    let category = document.getElementById('editLinkForm').getAttribute('data-category');
+    let alias = document.getElementById('editAlias').value;
+    let url = document.getElementById('editUrl').value;
+
+    let links = JSON.parse(localStorage.getItem(category)) || [];
+    let linkIndex = links.findIndex(l => l.url === oldUrl);
+    if (linkIndex !== -1) {
+        links[linkIndex].alias = alias;
+        links[linkIndex].url = url;
+        localStorage.setItem(category, JSON.stringify(links));
     }
 
-    localStorage.setItem('links', JSON.stringify(links));
+    loadLinks();
+    document.getElementById('edit_link').close();
+}
+
+function removeLink(url, category) {
+    let links = JSON.parse(localStorage.getItem(category)) || [];
+    links = links.filter(link => link.url !== url);
+    localStorage.setItem(category, JSON.stringify(links));
+
+    let containerId = category + 'Container';
+    let linksContainer = document.getElementById(containerId);
+    let linkCards = linksContainer.getElementsByClassName('link-card');
+
+    for (let card of linkCards) {
+        if (card.href === url) {
+            card.remove();
+            break;
+        }
+    }
+
+    updateTopLinks();
 }

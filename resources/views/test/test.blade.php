@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div id="admLinksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto">
+        <div id="admLinksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto mb-4">
             <!-- Link cards -->
         </div>
 
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div id="teknisLinksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto">
+        <div id="teknisLinksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto mb-4">
             <!-- Link cards -->
         </div>
 
@@ -98,19 +98,19 @@
                         <label for="name" class="cursor-pointer text-xs font-bold">
                             Alias Link
                         </label>
-                        <input id="linkAlias" type="text" name="name" placeholder="Masukkan alias link..." class="input input-bordered w-full max-w-xs" required />
+                        <input id="linkAlias" type="text" name="name" placeholder="Masukkan alias link..." class="input input-bordered " required />
                     </div>
 
                     <div class="link-input-container flex flex-col gap-2 mb-4">
                         <label for="link" class="cursor-pointer text-xs font-bold">
                             Link
                         </label>
-                        <input id="linkUrl" type="text" name="link" placeholder="Masukkan alamat link..." class="input input-bordered w-full max-w-xs" required />
+                        <input id="linkUrl" type="text" name="link" placeholder="Masukkan alamat link..." class="input input-bordered " required />
                     </div>
 
                     <div class="modal-action">
-                        <button type="button" class="btn" onclick="document.getElementById('add_link').close()">Close</button>
-                        <button type="submit" class="btn btn-accent">Save</button>
+                        <button type="button" class="btn" onclick="document.getElementById('add_link').close()">Batal</button>
+                        <button type="submit" class="btn btn-accent">Simpan</button>
                     </div>
                 </form>
             </dialog>
@@ -129,19 +129,19 @@
                         <label for="editAlias" class="cursor-pointer text-xs font-bold">
                             Alias Link
                         </label>
-                        <input id="editAlias" type="text" name="name" placeholder="Masukkan alias link..." class="input input-bordered w-full max-w-xs" required />
+                        <input id="editAlias" type="text" name="name" placeholder="Masukkan alias link..." class="input input-bordered " required />
                     </div>
 
                     <div class="link-input-container flex flex-col gap-2 mb-4">
                         <label for="editUrl" class="cursor-pointer text-xs font-bold">
                             Link
                         </label>
-                        <input id="editUrl" type="text" name="link" placeholder="Masukkan alamat link..." class="input input-bordered w-full max-w-xs" required />
+                        <input id="editUrl" type="text" name="link" placeholder="Masukkan alamat link..." class="input input-bordered " required />
                     </div>
 
                     <div class="modal-action">
-                        <button type="button" class="btn" onclick="document.getElementById('edit_link').close()">Close</button>
-                        <button type="submit" class="btn btn-accent">Save</button>
+                        <button type="button" class="btn" onclick="document.getElementById('edit_link').close()">Batal</button>
+                        <button type="submit" class="btn btn-accent">Simpan</button>
                     </div>
                 </form>
             </dialog>
