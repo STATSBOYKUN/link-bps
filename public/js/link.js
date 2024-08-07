@@ -1,40 +1,113 @@
-const admLinks = [
-    { alias: 'Simpeg', url: 'https://simpeg.bps.go.id', clicks: 0 },
-    { alias: 'Kipapp', url: 'https://webapps.bps.go.id/kipapp/', clicks: 0 },
-    { alias: 'Sipecut', url: 'https://sipecut.bps.go.id', clicks: 0 },
-    { alias: 'BOS', url: 'https://backoffice.bps.go.id/', clicks: 0 },
-    { alias: 'PPID', url: 'https://ppid.bps.go.id/?mfd=3313', clicks: 0 },
-    { alias: 'Emonev Bappenas', url: 'https://e-monev.bappenas.go.id/', clicks: 0 },
-    { alias: 'Daftar Hadir BPS', url: 'https://webapps.bps.go.id/daftarhadir/', clicks: 0 },
-    { alias: 'SMART', url: 'https://smart.kemenkeu.go.id/', clicks: 0 },
-    { alias: 'Manajemen Mitra', url: 'https://manajemen-mitra.bps.go.id/', clicks: 0 }
-];
+const admLinks = [{
+    alias: 'Simpeg',
+    url: 'https://simpeg.bps.go.id',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
+    alias: 'Kipapp',
+    url: 'https://webapps.bps.go.id/kipapp/',
+    clicks: 0,
+    bgColor: '#66CC8A',
+    vpn: false
+}, {alias: 'Sipecut', url: 'https://sipecut.bps.go.id', clicks: 0, bgColor: '#F8F8F2', vpn: true}, {
+    alias: 'BOS',
+    url: 'https://backoffice.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
+    alias: 'PPID',
+    url: 'https://ppid.bps.go.id/?mfd=3313',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}, {alias: 'Emonev Bappenas', url: 'https://e-monev.bappenas.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: false}, {
+    alias: 'Daftar Hadir BPS', url: 'https://webapps.bps.go.id/daftarhadir/', clicks: 0, bgColor: '#F8F8F2', vpn: true
+}, {
+    alias: 'SMART',
+    url: 'https://smart.kemenkeu.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}, {alias: 'Manajemen Mitra', url: 'https://manajemen-mitra.bps.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: true}];
 
-const teknisLinks = [
-    { alias: 'Evita', url: 'https://s.bps.go.id/evitajateng', clicks: 0 },
-    { alias: 'Monitoring', url: 'https://webmonitoring.bps.go.id/', clicks: 0 },
-    { alias: 'Dashboard BPS', url: 'http://dashboard.bps.go.id/', clicks: 0 },
-    { alias: 'Quality Gate', url: 'https://webapps.bps.go.id/nqaf/qgate/', clicks: 0 },
-    { alias: 'Pengolahan', url: 'https://pengolahan.bps.go.id/', clicks: 0 },
-    { alias: 'Webentry', url: 'https://webentry.bps.go.id/', clicks: 0 },
-    { alias: 'Portal Publikasi', url: 'https://portalpublikasi.bps.go.id/', clicks: 0 },
-    { alias: 'Omae', url: 'https://webapps.bps.go.id/jateng/omae/', clicks: 0 },
-    { alias: 'Romantik', url: 'https://romantik.web.bps.go.id/', clicks: 0 },
-    { alias: 'Pembinaan Statistik Sektoral', url: 'https://webapps.bps.go.id/rujukan/pembinaan/public/', clicks: 0 },
-    { alias: 'Sinergi', url: 'https://webapps.bps.go.id/jateng/sinergi/', clicks: 0 },
-    { alias: 'KSA', url: 'https://ksa.bps.go.id/', clicks: 0 },
-    { alias: 'KSA Pro', url: 'https://ksapro-manajemen.bps.go.id/', clicks: 0 },
-    { alias: 'PemirsaSDGs', url: 'https://pemirsasdgs.jatengprov.go.id/', clicks: 0 }
-];
+const teknisLinks = [{
+    alias: 'Evita',
+    url: 'https://s.bps.go.id/evitajateng',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}, {
+    alias: 'Monitoring',
+    url: 'https://webmonitoring.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
+    alias: 'Dashboard BPS',
+    url: 'http://dashboard.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
+    alias: 'Quality Gate',
+    url: 'https://webapps.bps.go.id/nqaf/qgate/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
+    alias: 'Pengolahan',
+    url: 'https://pengolahan.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}, {
+    alias: 'Webentry',
+    url: 'https://webentry.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
+    alias: 'Portal Publikasi',
+    url: 'https://portalpublikasi.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}, {
+    alias: 'Omae',
+    url: 'https://webapps.bps.go.id/jateng/omae/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {alias: 'Romantik', url: 'https://romantik.web.bps.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: true}, {
+    alias: 'Pembinaan Statistik Sektoral',
+    url: 'https://webapps.bps.go.id/rujukan/pembinaan/public/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}, {
+    alias: 'Sinergi',
+    url: 'https://webapps.bps.go.id/jateng/sinergi/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}, {alias: 'KSA', url: 'https://ksa.bps.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: true}, {
+    alias: 'KSA Pro',
+    url: 'https://ksapro-manajemen.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {alias: 'PemirsaSDGs', url: 'https://pemirsasdgs.jatengprov.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: false}];
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', loadLinks);
 document.addEventListener('DOMContentLoaded', updateTopLinks);
-document.getElementById('addLinkForm').addEventListener('submit', function(event) {
+document.getElementById('addLinkForm').addEventListener('submit', function (event) {
     event.preventDefault();
     addLink();
 });
-document.getElementById('editLinkForm').addEventListener('submit', function(event) {
+document.getElementById('editLinkForm').addEventListener('submit', function (event) {
     event.preventDefault();
     updateLink();
 });
@@ -63,8 +136,9 @@ function appendLinkToContainer(link, containerId, category) {
         return; // Skip adding this link if URL is invalid
     }
 
-    linkCard.className = 'card bg-base-100 h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
+    linkCard.className = `card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip`;
     linkCard.draggable = true;
+    linkCard.style.backgroundColor = link.bgColor;
     linkCard.innerHTML = `
         <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
             <label tabindex="0" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
@@ -81,6 +155,7 @@ function appendLinkToContainer(link, containerId, category) {
                 ${link.alias}
             </span>
         </div>
+        ${link.vpn ? '<div class="vpn-text absolute bottom-1 left-1 w-4 h-4 md:w-6 md:h-6 bg-base-200 rounded-tr-full"><img class="h-3 w-3 md:h-4 md:w-4 mt-0.5 md:mt-1.5" src="logo/shield-keyhole.svg" alt="vpn"/></div>' : ''}
     `;
 
     linkCard.addEventListener('click', function (e) {
@@ -131,9 +206,7 @@ function addLink() {
     let url = document.getElementById('linkUrl').value;
 
     let newLink = {
-        alias: alias,
-        url: url,
-        clicks: 0
+        alias: alias, url: url, clicks: 0, bgColor: '#F8F8F2', vpn: false
     };
 
     let links = JSON.parse(localStorage.getItem('links')) || [];
@@ -253,14 +326,16 @@ function updateLinksOrder() {
         for (let card of linkCards) {
             let alias = card.getElementsByClassName('link-text')[0].innerText;
             let url = card.href;
+            let bgColor = card.style.backgroundColor;
+            let vpn = card.getElementsByClassName('vpn-text').length > 0;
             let clicks = JSON.parse(localStorage.getItem('links'))?.find(link => link.url === url)?.clicks || 0;
 
             if (containerId === 'admLinksContainer') {
-                admLinksData.push({ alias, url, clicks });
+                admLinksData.push({alias, url, clicks, bgColor, vpn});
             } else if (containerId === 'teknisLinksContainer') {
-                teknisLinksData.push({ alias, url, clicks });
+                teknisLinksData.push({alias, url, clicks, bgColor, vpn});
             } else {
-                allLinks.push({ alias, url, clicks });
+                allLinks.push({alias, url, clicks, bgColor, vpn});
             }
         }
     });

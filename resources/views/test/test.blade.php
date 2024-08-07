@@ -77,7 +77,6 @@
                 </div>
             </div>
         </div>
-
         <div class="collapse bg-base-200">
             <input type="checkbox" />
             <div class="collapse-title text-xs font-bold">

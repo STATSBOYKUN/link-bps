@@ -1,4 +1,4 @@
-function updateAdmIndicators() {
+function updateIndicators() {
     // Check if any link cards are visible in the 'admLinksContainer'
     let admContainer = document.getElementById('admLinksContainer');
     let admIndicator = document.getElementById('admIndicator');
@@ -7,18 +7,16 @@ function updateAdmIndicators() {
 
     // Show or hide the 'admIndicator'
     admIndicator.style.display = admHasVisibleLinks ? '' : 'none';
-}
 
-function updateTeknisIndicators() {
+    // Check if any link cards are visible in the 'teknisLinksContainer'
     let teknisContainer = document.getElementById('teknisLinksContainer');
     let teknisIndicator = document.getElementById('teknisIndicator');
     let teknisLinkCards = teknisContainer.getElementsByClassName('link-card');
-
     let teknisHasVisibleLinks = Array.from(teknisLinkCards).some(card => card.style.display !== 'none');
 
+    // Show or hide the 'teknisIndicator'
     teknisIndicator.style.display = teknisHasVisibleLinks ? '' : 'none';
 }
-
 
 function filterLinks() {
     let input = document.getElementById('searchInput');
@@ -56,12 +54,9 @@ function filterLinks() {
                     linkCards[i].style.display = "none";
                 }
             }
-
-            // Update the visibility of the indicators based on the link cards
-            updateAdmIndicators();
-            updateTeknisIndicators();
         });
     }
 
-
+    // Update the visibility of the indicators based on the link cards
+    updateIndicators();
 }
