@@ -8,3 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }, 650);
 });
+
+function toggleSearchBar() {
+    const searchInputContainer = document.getElementById('searchInputContainer');
+    if (searchInputContainer.classList.contains('hidden')) {
+        searchInputContainer.classList.remove('hidden');
+    } else {
+        searchInputContainer.classList.add('hidden');
+    }
+}

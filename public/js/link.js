@@ -27,19 +27,19 @@ const teknisLinks = [
     { alias: 'PemirsaSDGs', url: 'https://pemirsasdgs.jatengprov.go.id/', clicks: 0 }
 ];
 
+// Event Listeners
 document.addEventListener('DOMContentLoaded', loadLinks);
 document.addEventListener('DOMContentLoaded', updateTopLinks);
-
 document.getElementById('addLinkForm').addEventListener('submit', function(event) {
     event.preventDefault();
     addLink();
 });
-
 document.getElementById('editLinkForm').addEventListener('submit', function(event) {
     event.preventDefault();
     updateLink();
 });
 
+// Draggable Initialization
 function initializeDraggable() {
     let linkCards = document.querySelectorAll('.link-card');
     linkCards.forEach(card => {
@@ -50,11 +50,12 @@ function initializeDraggable() {
     });
 }
 
+// Append Link to Container
 function appendLinkToContainer(link, containerId, category) {
     let linksContainer = document.getElementById(containerId);
     let linkCard = document.createElement('a');
     linkCard.href = link.url;
-    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
+    linkCard.className = 'card bg-base-100 h-[72px] w-[72px] md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
     linkCard.draggable = true;
     linkCard.innerHTML = `
         <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
@@ -76,7 +77,7 @@ function appendLinkToContainer(link, containerId, category) {
 
     linkCard.addEventListener('click', function (e) {
         e.preventDefault();
-        incrementLinkClick(link.url);
+        incrementLinkClick(link.url, category);
         window.open(link.url, '_blank');
     });
 
@@ -84,20 +85,22 @@ function appendLinkToContainer(link, containerId, category) {
     initializeDraggable();
 }
 
+// Load Links
 function loadLinks() {
-    let linksContainer = document.getElementById('linksContainer');
-    let topLinksContainer = document.getElementById('topLinksContainer');
     let admLinksContainer = document.getElementById('admLinksContainer');
     let teknisLinksContainer = document.getElementById('teknisLinksContainer');
+    let linksContainer = document.getElementById('linksContainer');
 
-    linksContainer.innerHTML = '';
-    topLinksContainer.innerHTML = '';
     admLinksContainer.innerHTML = '';
     teknisLinksContainer.innerHTML = '';
+    linksContainer.innerHTML = '';
 
     let admLinksData = JSON.parse(localStorage.getItem('admLinks')) || admLinks;
     let teknisLinksData = JSON.parse(localStorage.getItem('teknisLinks')) || teknisLinks;
     let links = JSON.parse(localStorage.getItem('links')) || [];
+
+    localStorage.setItem('admLinks', JSON.stringify(admLinks));
+    localStorage.setItem('teknisLinks', JSON.stringify(teknisLinks));
 
     admLinksData.forEach(link => {
         appendLinkToContainer(link, 'admLinksContainer', 'admLinks');
@@ -114,6 +117,7 @@ function loadLinks() {
     updateTopLinks();
 }
 
+// Add Link
 function addLink() {
     let alias = document.getElementById('linkAlias').value;
     let url = document.getElementById('linkUrl').value;
@@ -128,23 +132,24 @@ function addLink() {
     links.push(newLink);
     localStorage.setItem('links', JSON.stringify(links));
 
-    appendLinkToContainer(newLink);
+    appendLinkToContainer(newLink, 'linksContainer', 'links');
     document.getElementById('add_link').close();
     document.getElementById('addLinkForm').reset();
     updateTopLinks();
 }
 
+// Update Top Links
 function updateTopLinks() {
     let topLinksContainer = document.getElementById('topLinksContainer');
     topLinksContainer.innerHTML = '';
 
     let links = JSON.parse(localStorage.getItem('links')) || [];
-    let topLinks = links.sort((a, b) => b.clicks - a.clicks).slice(0, 5);
+    let topLinks = links.sort((a, b) => b.clicks - a.clicks).slice(0, 4);
 
     topLinks.forEach(link => {
         let linkCard = document.createElement('a');
         linkCard.href = link.url;
-        linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card';
+        linkCard.className = 'card bg-base-100 h-[72px] w-[72px] md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card';
         linkCard.innerHTML = `
             <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
                 <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
@@ -159,6 +164,7 @@ function updateTopLinks() {
     });
 }
 
+// Drag-and-Drop Handlers
 let draggedElement = null;
 
 function handleDragStart(event) {
@@ -226,9 +232,12 @@ function handleDragEnd() {
     draggedElement = null;
 }
 
+// Update Links Order
 function updateLinksOrder() {
     let linkContainers = ['linksContainer', 'admLinksContainer', 'teknisLinksContainer'];
     let allLinks = [];
+    let admLinksData = [];
+    let teknisLinksData = [];
 
     linkContainers.forEach(containerId => {
         let linksContainer = document.getElementById(containerId);
@@ -239,23 +248,33 @@ function updateLinksOrder() {
             let url = card.href;
             let clicks = JSON.parse(localStorage.getItem('links'))?.find(link => link.url === url)?.clicks || 0;
 
-            allLinks.push({ alias, url, clicks });
+            if (containerId === 'admLinksContainer') {
+                admLinksData.push({ alias, url, clicks });
+            } else if (containerId === 'teknisLinksContainer') {
+                teknisLinksData.push({ alias, url, clicks });
+            } else {
+                allLinks.push({ alias, url, clicks });
+            }
         }
     });
 
+    localStorage.setItem('admLinks', JSON.stringify(admLinksData));
+    localStorage.setItem('teknisLinks', JSON.stringify(teknisLinksData));
     localStorage.setItem('links', JSON.stringify(allLinks));
 }
 
-function incrementLinkClick(url) {
-    let links = JSON.parse(localStorage.getItem('links')) || [];
+// Increment Link Click
+function incrementLinkClick(url, category) {
+    let links = JSON.parse(localStorage.getItem(category)) || [];
     let link = links.find(l => l.url === url);
     if (link) {
         link.clicks++;
-        localStorage.setItem('links', JSON.stringify(links));
+        localStorage.setItem(category, JSON.stringify(links));
         updateTopLinks();
     }
 }
 
+// Edit Link
 function editLink(url, category) {
     let links = JSON.parse(localStorage.getItem(category)) || [];
     let link = links.find(l => l.url === url);
@@ -268,6 +287,7 @@ function editLink(url, category) {
     }
 }
 
+// Update Link
 function updateLink() {
     let oldUrl = document.getElementById('editLinkForm').getAttribute('data-url');
     let category = document.getElementById('editLinkForm').getAttribute('data-category');
@@ -286,6 +306,7 @@ function updateLink() {
     document.getElementById('edit_link').close();
 }
 
+// Remove Link
 function removeLink(url, category) {
     let links = JSON.parse(localStorage.getItem(category)) || [];
     links = links.filter(link => link.url !== url);
