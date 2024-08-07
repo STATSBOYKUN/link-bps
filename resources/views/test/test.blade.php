@@ -56,6 +56,30 @@
             <div class="flex flex-row gap-1 items-center">
                 <img class="w-auto h-6" src="{{ asset('logo/link.svg') }}" alt="link"/>
                 <div class="text-lg md:text-xl lg:text-2xl text-primary font-bold">
+                    Administrasi
+                </div>
+            </div>
+        </div>
+        <div id="admLinksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto">
+            <!-- Link cards -->
+        </div>
+
+        <div class="flex flex-row items-center gap-4 mb-5">
+            <div class="flex flex-row gap-1 items-center">
+                <img class="w-auto h-6" src="{{ asset('logo/link.svg') }}" alt="link"/>
+                <div class="text-lg md:text-xl lg:text-2xl text-primary font-bold">
+                    Teknis
+                </div>
+            </div>
+        </div>
+        <div id="teknisLinksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto">
+            <!-- Link cards -->
+        </div>
+
+        <div class="flex flex-row items-center gap-4 mb-5">
+            <div class="flex flex-row gap-1 items-center">
+                <img class="w-auto h-6" src="{{ asset('logo/link.svg') }}" alt="link"/>
+                <div class="text-lg md:text-xl lg:text-2xl text-primary font-bold">
                     Links
                 </div>
             </div>
@@ -122,6 +146,23 @@
                 </form>
             </dialog>
         </div>
+        <a class="card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card">
+            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
+                <label tabindex="0" class="cursor-pointer">☰</label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32">
+                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}')">Edit</a></li>
+                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}')">Remove</a></li>
+                </ul>
+            </div>
+            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            </figure>
+            <div class="card-body text-center tooltip" data-tip="${link.alias}">
+                <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    ${link.alias}
+                </span>
+            </div>
+        </a>
         <div id="linksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mx-auto">
             <!-- Link cards -->
         </div>

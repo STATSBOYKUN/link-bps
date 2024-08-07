@@ -11,8 +11,7 @@ document.getElementById('editLinkForm').addEventListener('submit', function(even
     updateLink();
 });
 
-const baseLinks = [
-    // Adm Links
+let admLinks = [
     { alias: 'Simpeg', url: 'https://simpeg.bps.go.id', clicks: 0 },
     { alias: 'Kipapp', url: 'https://webapps.bps.go.id/kipapp/', clicks: 0 },
     { alias: 'Sipecut', url: 'https://sipecut.bps.go.id', clicks: 0 },
@@ -21,8 +20,10 @@ const baseLinks = [
     { alias: 'Emonev Bappenas', url: 'https://e-monev.bappenas.go.id/', clicks: 0 },
     { alias: 'Daftar Hadir BPS', url: 'https://webapps.bps.go.id/daftarhadir/', clicks: 0 },
     { alias: 'SMART', url: 'https://smart.kemenkeu.go.id/', clicks: 0 },
-    { alias: 'Manajemen Mitra', url: 'https://manajemen-mitra.bps.go.id/', clicks: 0 },
-    // Teknis Links
+    { alias: 'Manajemen Mitra', url: 'https://manajemen-mitra.bps.go.id/', clicks: 0 }
+]
+
+const teknisLinks = [
     { alias: 'Evita', url: 'https://s.bps.go.id/evitajateng', clicks: 0 },
     { alias: 'Monitoring', url: 'https://webmonitoring.bps.go.id/', clicks: 0 },
     { alias: 'Dashboard BPS', url: 'http://dashboard.bps.go.id/', clicks: 0 },
@@ -38,6 +39,119 @@ const baseLinks = [
     { alias: 'KSA Pro', url: 'https://ksapro-manajemen.bps.go.id/', clicks: 0 },
     { alias: 'PemirsaSDGs', url: 'https://pemirsasdgs.jatengprov.go.id/', clicks: 0 }
 ];
+
+function appendLinkToContainer(link) {
+    let linksContainer = document.getElementById('linksContainer');
+    let linkCard = document.createElement('a');
+    linkCard.href = link.url;
+    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
+    linkCard.draggable = true;
+    linkCard.innerHTML = `
+            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
+                <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
+                <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}'); event.stopPropagation(); return false;">Edit</a></li>
+                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}'); event.stopPropagation(); return false;">Remove</a></li>
+                </ul>
+            </div>
+            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            </figure>
+            <div class="card-body text-center">
+                <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    ${link.alias}
+                </span>
+            </div>
+        `;
+
+    linkCard.addEventListener('dragstart', handleDragStart);
+    linkCard.addEventListener('dragover', handleDragOver);
+    linkCard.addEventListener('drop', handleDrop);
+    linkCard.addEventListener('dragend', handleDragEnd);
+    linkCard.addEventListener('click', function (e) {
+        e.preventDefault();
+        incrementLinkClick(link.url);
+        window.open(link.url, '_blank');
+    });
+
+    linksContainer.appendChild(linkCard);
+}
+
+
+function appendLinkToTeknisContainer(link) {
+    let linksContainer = document.getElementById('teknisLinksContainer');
+    let linkCard = document.createElement('a');
+    linkCard.href = link.url;
+    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
+    linkCard.draggable = true;
+    linkCard.innerHTML = `
+            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
+                <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
+                <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}'); event.stopPropagation(); return false;">Edit</a></li>
+                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}'); event.stopPropagation(); return false;">Remove</a></li>
+                </ul>
+            </div>
+            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            </figure>
+            <div class="card-body text-center">
+                <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    ${link.alias}
+                </span>
+            </div>
+        `;
+
+    linkCard.addEventListener('dragstart', handleDragStart);
+    linkCard.addEventListener('dragover', handleDragOver);
+    linkCard.addEventListener('drop', handleDrop);
+    linkCard.addEventListener('dragend', handleDragEnd);
+    linkCard.addEventListener('click', function (e) {
+        e.preventDefault();
+        incrementLinkClick(link.url);
+        window.open(link.url, '_blank');
+    });
+
+    linksContainer.appendChild(linkCard);
+}
+
+
+function appendLinkToAdmContainer(link) {
+    let linksContainer = document.getElementById('admLinksContainer');
+    let linkCard = document.createElement('a');
+    linkCard.href = link.url;
+    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip';
+    linkCard.draggable = true;
+    linkCard.innerHTML = `
+            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
+                <label tabindex="4" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
+                <ul tabindex="4" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}'); event.stopPropagation(); return false;">Edit</a></li>
+                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}'); event.stopPropagation(); return false;">Remove</a></li>
+                </ul>
+            </div>
+            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            </figure>
+            <div class="card-body text-center">
+                <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    ${link.alias}
+                </span>
+            </div>
+        `;
+
+    linkCard.addEventListener('dragstart', handleDragStart);
+    linkCard.addEventListener('dragover', handleDragOver);
+    linkCard.addEventListener('drop', handleDrop);
+    linkCard.addEventListener('dragend', handleDragEnd);
+    linkCard.addEventListener('click', function (e) {
+        e.preventDefault();
+        incrementLinkClick(link.url);
+        window.open(link.url, '_blank');
+    });
+
+    linksContainer.appendChild(linkCard);
+}
 
 function addLink() {
     let alias = document.getElementById('linkAlias').value;
@@ -57,43 +171,6 @@ function addLink() {
     document.getElementById('add_link').close();
     document.getElementById('addLinkForm').reset();
     updateTopLinks();
-}
-
-function appendLinkToContainer(link) {
-    let linksContainer = document.getElementById('linksContainer');
-    let linkCard = document.createElement('a');
-    linkCard.href = link.url;
-    linkCard.className = 'card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card';
-    linkCard.draggable = true;
-    linkCard.innerHTML = `
-            <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
-                <label tabindex="0" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
-                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32">
-                    <li><a class="text-xs" href="#" onclick="editLink('${link.url}'); event.stopPropagation(); return false;">Edit</a></li>
-                    <li><a class="text-xs" href="#" onclick="removeLink('${link.url}'); event.stopPropagation(); return false;">Remove</a></li>
-                </ul>
-            </div>
-            <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-                <img src="https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}" onerror="this.src='{{ asset('logo/logo.png') }}'" class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
-            </figure>
-            <div class="card-body text-center">
-                <span class="link-text text-xs inline-block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-                    ${link.alias}
-                </span>
-            </div>
-        `;
-
-    linkCard.addEventListener('dragstart', handleDragStart);
-    linkCard.addEventListener('dragover', handleDragOver);
-    linkCard.addEventListener('drop', handleDrop);
-    linkCard.addEventListener('dragend', handleDragEnd);
-    linkCard.addEventListener('click', function (e) {
-        e.preventDefault();
-        incrementLinkClick(link.url);
-        window.open(link.url, '_blank');
-    });
-
-    linksContainer.appendChild(linkCard);
 }
 
 function incrementLinkClick(url) {
@@ -147,16 +224,26 @@ function loadLinks() {
     linksContainer.innerHTML = '';
     topLinksContainer.innerHTML = '';
 
-    let links = JSON.parse(localStorage.getItem('links')) || baseLinks;
+    let links = JSON.parse(localStorage.getItem('links')) || [];
 
     if (links.length === 0) {
-        localStorage.setItem('links', JSON.stringify(baseLinks));
-        links = baseLinks;
-    }
+        localStorage.setItem('admLinks', JSON.stringify(admLinks));
 
-    links.forEach(link => {
-        appendLinkToContainer(link);
-    });
+        let admLinks = JSON.parse(localStorage.getItem('admLinks')) || [];
+        admLinks.forEach(link => {
+            appendLinkToAdmContainer(link);
+        });
+
+        localStorage.setItem('teknisLinks', JSON.stringify(teknisLinks));
+        let teknisLinks = JSON.parse(localStorage.getItem('teknisLinks')) || [];
+        teknisLinks.forEach(link => {
+            appendLinkToTeknisContainer(link);
+        });
+    } else {
+        links.forEach(link => {
+            appendLinkToContainer(link);
+        });
+    }
 
     updateTopLinks();
 }
