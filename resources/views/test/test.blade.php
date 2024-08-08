@@ -161,6 +161,26 @@
                         </form>
                     </dialog>
                 </div>
+                <a href="" class="card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip">
+                    <div class="hidden md:absolute dropdown dropdown-hover dropdown-end top-2 right-2">
+                        <label tabindex="0" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
+                        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+                            <li><a class="text-xs" href="#" onclick="editLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Edit</a></li>
+                            <li><a class="text-xs" href="#" onclick="removeLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Remove</a></li>
+                        </ul>
+                    </div>
+                    <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
+                        <img src="${link.alias === 'Kipapp' ? 'logo/kipapp.png' : `https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}&sz=128`}"
+                             onerror="this.src='https://icons.duckduckgo.com/ip3/${new URL(link.url).hostname}.ico'; this.onerror=null; this.src='logo/logo.png';"
+                             class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+                    </figure>
+                    <div class="card-body text-center">
+            <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+                ${link.alias}
+            </span>
+                    </div>
+                    <div class="vpn-text absolute bottom-0 left-0 w-4 h-4 md:w-6 md:h-6 bg-base-200 rounded-tr-full"><img class="h-3 w-3 md:h-4 md:w-4 mt-0.5 md:mt-1.5" src="logo/shield-keyhole.svg" alt="vpn"/></div>
+                </a>
                 <div id="linksContainer" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1 mx-auto">
                     <!-- Link cards -->
                 </div>

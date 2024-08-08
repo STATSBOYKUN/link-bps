@@ -140,7 +140,7 @@ function appendLinkToContainer(link, containerId, category) {
     linkCard.draggable = true;
     linkCard.style.backgroundColor = link.bgColor;
     linkCard.innerHTML = `
-        <div class="dropdown dropdown-hover dropdown-end absolute top-2 right-2">
+        <div class="hidden md:absolute dropdown dropdown-hover dropdown-end absolute top-2 right-2">
             <label tabindex="0" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
                 <li><a class="text-xs" href="#" onclick="editLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Edit</a></li>
@@ -157,7 +157,7 @@ function appendLinkToContainer(link, containerId, category) {
                 ${link.alias}
             </span>
         </div>
-        ${link.vpn ? '<div class="vpn-text absolute bottom-1 left-1 w-4 h-4 md:w-6 md:h-6 bg-base-200 rounded-tr-full"><img class="h-3 w-3 md:h-4 md:w-4 mt-0.5 md:mt-1.5" src="logo/shield-keyhole.svg" alt="vpn"/></div>' : ''}
+        ${link.vpn ? '<div class="vpn-text absolute bottom-0 left-0 w-4 h-4 md:w-6 md:h-6 bg-base-200 rounded-tr-full"><img class="h-3 w-3 md:h-4 md:w-4 mt-0.5 md:mt-1.5" src="logo/shield-keyhole.svg" alt="vpn"/></div>' : ''}
     `;
 
     linkCard.addEventListener('click', function (e) {
