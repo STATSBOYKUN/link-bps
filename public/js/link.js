@@ -1,104 +1,166 @@
 const admLinks = [{
     alias: 'Simpeg',
+    image: 'logo/',
     url: 'https://simpeg.bps.go.id',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
 }, {
     alias: 'Kipapp',
+    image: 'logo/kipapp.png',
     url: 'https://webapps.bps.go.id/kipapp/',
     clicks: 0,
     bgColor: '#66CC8A',
     vpn: false
-}, {alias: 'Sipecut', url: 'https://sipecut.bps.go.id', clicks: 0, bgColor: '#F8F8F2', vpn: true}, {
+}, {
+    alias: 'Sipecut',
+    image: 'logo/sipecut.svg',
+    url: 'https://sipecut.bps.go.id',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
     alias: 'BOS',
+    image: 'logo/BOS.png',
     url: 'https://backoffice.bps.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
 }, {
     alias: 'PPID',
+    image: 'logo/PPID.png',
     url: 'https://ppid.bps.go.id/?mfd=3313',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: false
-}, {alias: 'Emonev Bappenas', url: 'https://e-monev.bappenas.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: false}, {
-    alias: 'Daftar Hadir BPS', url: 'https://webapps.bps.go.id/daftarhadir/', clicks: 0, bgColor: '#F8F8F2', vpn: true
 }, {
-    alias: 'SMART',
-    url: 'https://smart.kemenkeu.go.id/',
+    alias: 'Emonev Bappenas',
+    image: 'logo/emonev.png',
+    url: 'https://e-monev.bappenas.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: false
-}, {alias: 'Manajemen Mitra', url: 'https://manajemen-mitra.bps.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: true}];
+}, {
+    alias: 'Daftar Hadir BPS',
+    image: 'logo/daftar-hadir.svg',
+    url: 'https://webapps.bps.go.id/daftarhadir/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
+    "alias": "SMART",
+    "image": "https://www.google.com/s2/favicons?domain=smart.kemenkeu.go.id&sz=128",
+    "url": "https://smart.kemenkeu.go.id/",
+    "clicks": 0,
+    "bgColor": "#F8F8F2",
+    "vpn": false
+}, {
+    alias: 'Manajemen Mitra',
+    image: 'logo/',
+    url: 'https://manajemen-mitra.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}];
 
 const teknisLinks = [{
     alias: 'Evita',
+    image: 'logo/',
     url: 'https://s.bps.go.id/evitajateng',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: false
 }, {
     alias: 'Monitoring',
+    image: 'logo/monitoring.png',
     url: 'https://webmonitoring.bps.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
 }, {
     alias: 'Dashboard BPS',
+    image: 'logo/',
     url: 'http://dashboard.bps.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
 }, {
     alias: 'Quality Gate',
+    image: 'logo/quality-gate.png',
     url: 'https://webapps.bps.go.id/nqaf/qgate/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
 }, {
     alias: 'Pengolahan',
+    image: 'logo/',
     url: 'https://pengolahan.bps.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: false
 }, {
     alias: 'Webentry',
+    image: 'logo/',
     url: 'https://webentry.bps.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
 }, {
     alias: 'Portal Publikasi',
+    image: 'logo/publikasi.png',
     url: 'https://portalpublikasi.bps.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: false
 }, {
     alias: 'Omae',
+    image: 'logo/',
     url: 'https://webapps.bps.go.id/jateng/omae/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
-}, {alias: 'Romantik', url: 'https://romantik.web.bps.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: true}, {
+}, {alias: 'Romantik',
+    image: 'logo/romantik.svg',
+    url: 'https://romantik.web.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true},
+    {
     alias: 'Pembinaan Statistik Sektoral',
+    image: 'logo/PSS.png',
     url: 'https://webapps.bps.go.id/rujukan/pembinaan/public/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: false
 }, {
     alias: 'Sinergi',
+    image: 'logo/',
     url: 'https://webapps.bps.go.id/jateng/sinergi/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: false
-}, {alias: 'KSA', url: 'https://ksa.bps.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: true}, {
+}, {
+    alias: 'KSA',
+    image: 'logo/KSA.png',
+    url: 'https://ksa.bps.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: true
+}, {
     alias: 'KSA Pro',
+    image: 'logo/manajemen.png',
     url: 'https://ksapro-manajemen.bps.go.id/',
     clicks: 0,
     bgColor: '#F8F8F2',
     vpn: true
-}, {alias: 'PemirsaSDGs', url: 'https://pemirsasdgs.jatengprov.go.id/', clicks: 0, bgColor: '#F8F8F2', vpn: false}];
+}, {
+    alias: 'PemirsaSDGs',
+    image: 'logo/',
+    url: 'https://pemirsasdgs.jatengprov.go.id/',
+    clicks: 0,
+    bgColor: '#F8F8F2',
+    vpn: false
+}];
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', loadLinks);
@@ -140,7 +202,7 @@ function appendLinkToContainer(link, containerId, category) {
     linkCard.draggable = true;
     linkCard.style.backgroundColor = link.bgColor;
     linkCard.innerHTML = `
-        <div class="hidden md:absolute dropdown dropdown-hover dropdown-end absolute top-2 right-2">
+        <div class="hidden md:block absolute dropdown dropdown-hover dropdown-end top-2 right-2">
             <label tabindex="0" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
                 <li><a class="text-xs" href="#" onclick="editLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Edit</a></li>
@@ -148,9 +210,9 @@ function appendLinkToContainer(link, containerId, category) {
             </ul>
         </div>
         <figure class="px-1 lg:px-4 pt-3 lg:pt-7 aspect-[2/1] items-end overflow-visible">
-            <img src="${link.alias === 'Kipapp' ? 'logo/kipapp.png' : `https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}&sz=128`}"
-             onerror="this.src='https://icons.duckduckgo.com/ip3/${new URL(link.url).hostname}.ico'; this.onerror=null; this.src='logo/logo.png';"
-             class="aspect-square w-6 lg:w-10 h-auto" alt="image"/>
+            <img src="${link.image === '/logo' ? 'logo/logo.png' : link.image }"
+             onerror="this.src='https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname}&sz=128'; this.onerror=null; this.src='logo/logo.png';"
+             class="image-logo aspect-square w-6 lg:w-10 h-auto" alt="image"/>
         </figure>
         <div class="card-body text-center">
             <span class="link-text text-xs inline-block max-w-[50px] md:max-w-[75px] lg:max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
@@ -327,17 +389,18 @@ function updateLinksOrder() {
 
         for (let card of linkCards) {
             let alias = card.getElementsByClassName('link-text')[0].innerText;
+            let image = card.getElementsByTagName('img')[0].src;
             let url = card.href;
             let bgColor = card.style.backgroundColor;
             let vpn = card.getElementsByClassName('vpn-text').length > 0;
             let clicks = JSON.parse(localStorage.getItem('links'))?.find(link => link.url === url)?.clicks || 0;
 
             if (containerId === 'admLinksContainer') {
-                admLinksData.push({alias, url, clicks, bgColor, vpn});
+                admLinksData.push({alias, image, url, clicks, bgColor, vpn});
             } else if (containerId === 'teknisLinksContainer') {
-                teknisLinksData.push({alias, url, clicks, bgColor, vpn});
+                teknisLinksData.push({alias, image, url, clicks, bgColor, vpn});
             } else {
-                allLinks.push({alias, url, clicks, bgColor, vpn});
+                allLinks.push({alias, image, url, clicks, bgColor, vpn});
             }
         }
     });

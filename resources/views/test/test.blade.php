@@ -162,7 +162,7 @@
                     </dialog>
                 </div>
                 <a href="" class="card h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 border-2 border-base-content/5 card-compact transition-all duration-200 hover:shadow hover:-translate-y-1 link-card tooltip">
-                    <div class="hidden md:absolute dropdown dropdown-hover dropdown-end top-2 right-2">
+                    <div class="hidden md:block absolute dropdown dropdown-hover dropdown-end top-2 right-2">
                         <label tabindex="0" class="cursor-pointer" onclick="event.stopPropagation()">☰</label>
                         <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
                             <li><a class="text-xs" href="#" onclick="editLink('${link.url}', '${category}'); event.stopPropagation(); return false;">Edit</a></li>
